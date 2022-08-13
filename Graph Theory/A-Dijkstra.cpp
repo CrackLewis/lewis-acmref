@@ -13,7 +13,7 @@ struct graph1
     //Might need to be modified in specific problems.
     vector<WeTy> dis(n+1,WeTy(INT_MAX));
     dis[rt]=WeTy();
-    priority_queue<pair<int,int>> Q;
+    priority_queue<pair<WeTy,int>> Q;
     Q.push(make_pair(-dis[rt],rt));
     while(Q.size())
     {
