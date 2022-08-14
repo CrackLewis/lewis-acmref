@@ -11,7 +11,7 @@ struct graph1
   graph1(int _n):n(_n),head(_n+1,-1),eid(-1){}
   void addedge(int u,int v,WeTy w=WeTy())
   {
-    assert((u<=n&&v<=n)&&"vertex out of range");
+    assert((u>=1&&v>=1&&u<=n&&v<=n)&&"vertex out of range");
     to.emplace_back(v);
     nxt.emplace_back(head[u]);
     we.emplace_back(w);

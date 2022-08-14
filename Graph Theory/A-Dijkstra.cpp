@@ -7,7 +7,7 @@ struct graph1
   //You should always ignore dis[0] and start from dis[1].
   vector<WeTy> dijkstra(int rt)
   {
-    assert(rt<=n&&"vertex out of range");
+    assert((rt>=1&&rt<=n)&&"vertex out of range");
     vector<bool> vis(n+1,false);
     //Its assumed here that the maximum distance doesnt exceed INT_MAX.
     //Might need to be modified in specific problems.

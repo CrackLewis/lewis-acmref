@@ -10,6 +10,7 @@ struct graph1
   bool sig_spfa_negflag;
   vector<WeTy> spfa(int rt)
   {
+    assert((rt>=1&&rt<=n)&&"vertex out of range");
     //Its assumed here that the maximum distance doesnt exceed INT_MAX.
     //Might need to be modified in specific problems.
     vector<WeTy> dis(n+1,WeTy(INT_MAX));
