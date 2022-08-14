@@ -2,3 +2,5 @@
 *.bat
 *.exe
 *.out
+
+.vscode
