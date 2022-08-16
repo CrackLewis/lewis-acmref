@@ -28,7 +28,7 @@ struct graph2
   graph2(int _n):edges(_n+1,vector<pair<int,WeTy>>()),n(_n){}
   void addedge(int u,int v,WeTy w=WeTy())
   {
-    assert((u<=n&&v<=n)&&"vertex out of range");
+    assert((u>=1&&v>=1&&u<=n&&v<=n)&&"vertex out of range");
     edges[u].emplace_back(make_pair(v,w));
   }
 };
