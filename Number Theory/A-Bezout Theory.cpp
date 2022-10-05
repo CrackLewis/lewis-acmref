@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-using LL = long long int;
-LL gcd(LL a, LL b);
+using i64 = long long int;
+i64 gcd(i64 a, i64 b);
 /**
  * Bezout Theory
  *
@@ -10,8 +10,8 @@ LL gcd(LL a, LL b);
  * \gcd(A_1,A_2,...,A_n). The function bezout(A) returns the minimum positive
  * value of \sum_{i=1}^n {A_i*X_i}. (A_i != 0)
  */
-LL bezout(const vector<LL>& A) {
-  LL res = -1;
+i64 bezout(const vector<i64>& A) {
+  i64 res = -1;
   for (auto i : A) {
     if (i == 0) continue;
     if (i < 0) i = -i;

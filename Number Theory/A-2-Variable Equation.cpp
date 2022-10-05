@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-using LL = long long int;
-LL exgcd(LL a, LL b, LL& x, LL& y);
+using i64 = long long int;
+i64 exgcd(i64 a, i64 b, i64& x, i64& y);
 
 /**
  * 2-Variable Equation (ax+by=c, a,b,c>0)
@@ -20,21 +20,21 @@ LL exgcd(LL a, LL b, LL& x, LL& y);
  * scnt,x2,y2 only effective when return>=2
  * x1,y1 only effective when return>=1
  */
-int equat2(LL a, LL b, LL c, LL& scnt, LL& x1, LL& x2, LL& y1, LL& y2) {
-  LL x, y;
-  LL res = exgcd(a, b, x, y);
+int equat2(i64 a, i64 b, i64 c, i64& scnt, i64& x1, i64& x2, i64& y1, i64& y2) {
+  i64 x, y;
+  i64 res = exgcd(a, b, x, y);
   // if gcd(a,b) cannot divide c, then there is no integer solution
   if (c % res) return 0;
 
   // now (x,y) is a solution for ax+by=gcd(a,b)
   // adjust x into the smallest positive integer
   x *= (c / res), y *= (c / res);
-  LL p = b / res, q = a / res;
+  i64 p = b / res, q = a / res;
   if (x < 0) {
-    LL rate = ceil((1.0 - x) / p);
+    i64 rate = ceil((1.0 - x) / p);
     x += p * rate, y -= q * rate;
   } else {
-    LL rate = (x - 1) / p;
+    i64 rate = (x - 1) / p;
     x -= p * rate, y += q * rate;
   }
 
@@ -44,6 +44,6 @@ int equat2(LL a, LL b, LL c, LL& scnt, LL& x1, LL& x2, LL& y1, LL& y2) {
     y1 = (y - 1) % q + 1, y2 = y;
     return 2;
   }
-  x1 = x, y1 = y + q * (LL)ceil((1.0 - y) / q);
+  x1 = x, y1 = y + q * (i64)ceil((1.0 - y) / q);
   return 1;
 }

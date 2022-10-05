@@ -21,15 +21,15 @@ using namespace std;
  * correctness.
  */
 
-using LL = long long int;
-LL gcd(LL a, LL b) { return b ? gcd(b, a % b) : a; }
+using i64 = long long int;
+i64 gcd(i64 a, i64 b) { return b ? gcd(b, a % b) : a; }
 /**
  * Why using a lot of __int128_t here?
- * Because we want to do quickpow on LL type, which needs int128 for temporary
+ * Because we want to do quickpow on i64 type, which needs int128 for temporary
  * storage. (Guisucheng is shit)
  */
-LL ksm(LL a, LL b, LL mod) {
-  LL res = 1ll;
+i64 ksm(i64 a, i64 b, i64 mod) {
+  i64 res = 1ll;
   while (b) {
     if (b & 1) res = ((__int128_t)res * a) % mod;
     b >>= 1, a = ((__int128_t)a * a) % mod;
@@ -37,10 +37,10 @@ LL ksm(LL a, LL b, LL mod) {
   return res;
 }
 // Miller-Rabin test
-LL miller_rabin(LL x, LL b) {
-  LL k = x - 1;
+i64 miller_rabin(i64 x, i64 b) {
+  i64 k = x - 1;
   while (k) {
-    LL cur = ksm(b, k, x);
+    i64 cur = ksm(b, k, x);
     // violates the quad-detection
     if (cur != 1 && cur != x - 1) return false;
     if ((k & 1) == 1 || cur == x - 1) return true;
@@ -49,7 +49,7 @@ LL miller_rabin(LL x, LL b) {
   return true;
 }
 // primality test
-bool isprime(LL x) {
+bool isprime(i64 x) {
   // the only failed case in our approach is 46856248255981.
   // so it's specially listed here.
   if (x == 46856248255981ll || x < 2) return false;
@@ -57,24 +57,24 @@ bool isprime(LL x) {
   return miller_rabin(x, 2) && miller_rabin(x, 61);
 }
 // transform used in pollard-rho
-LL f(LL x, LL c, LL n) { return ((__int128_t)x * x + c) % n; }
+i64 f(i64 x, i64 c, i64 n) { return ((__int128_t)x * x + c) % n; }
 // the god rolls a dice
 mt19937 rnd(chrono::steady_clock::now().time_since_epoch().count());
 // pollard_rho(x): returns a factor of x
-LL pollard_rho(LL x) {
-  LL s = 0, t = 0, c = 1ll * rnd() % (x - 1) + 1;
+i64 pollard_rho(i64 x) {
+  i64 s = 0, t = 0, c = 1ll * rnd() % (x - 1) + 1;
   int stp = 0, goal = 1;
-  LL val = 1;
+  i64 val = 1;
   for (goal = 1; goal; goal <<= 1, s = t, val = 1) {
     for (stp = 1; stp <= goal; ++stp) {
       t = f(t, c, x);
       val = (__int128_t)val * abs(t - s) % x;
       if ((stp % 127) == 0) {
-        LL d = gcd(val, x);
+        i64 d = gcd(val, x);
         if (d > 1) return d;
       }
     }
-    LL d = gcd(val, x);
+    i64 d = gcd(val, x);
     if (d > 1) return d;
   }
   return x;
@@ -85,14 +85,14 @@ LL pollard_rho(LL x) {
  *
  * factorize() generates a list of factors of x.
  */
-map<LL, int> factors;
-void factorize(LL x, LL pw = 1) {
+map<i64, int> factors;
+void factorize(i64 x, i64 pw = 1) {
   if (x < 2) return;
   if (isprime(x)) {
     factors[x] += pw;
     return;
   }
-  LL p = x, ppw = 0;
+  i64 p = x, ppw = 0;
   while (p >= x) p = pollard_rho(x);
   while ((x % p) == 0) x /= p, ppw++;
   // split factors
@@ -100,7 +100,7 @@ void factorize(LL x, LL pw = 1) {
 }
 
 int main() {
-  LL x;
+  i64 x;
   int _;
   cin >> _;
   while (_--) {

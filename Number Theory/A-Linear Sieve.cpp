@@ -37,5 +37,5 @@ void linear_sieve(vector<int>& vphi,    // ==> vphi[1~n]
     }
   }
   // ATTENTION: You might need the prefix sum version of the array vphi and mu.
-  // If you do so, remember to mark vphi as LL type.
+  // If you do so, remember to mark vphi as i64 type.
 }
