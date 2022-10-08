@@ -80,12 +80,12 @@ void FFT_demo() {
 }
 
 // ============ NTT ============
-using LL = long long int;
+using i64 = long long int;
 // NTT arguments. P must be the pattern r*2^k+1, where k must be greater than
 // limit.
-const LL P = 998244353, G = 3, Gi = 332748118;
-LL ksm(LL a, LL b, LL mod = P) {
-  LL ret = 1ll;
+const i64 P = 998244353, G = 3, Gi = 332748118;
+i64 ksm(i64 a, i64 b, i64 mod = P) {
+  i64 ret = 1ll;
   while (b) {
     if (b & 1) ret = (ret * a) % mod;
     b >>= 1, a = (a * a) % mod;
@@ -94,7 +94,7 @@ LL ksm(LL a, LL b, LL mod = P) {
 }
 
 /**
- * NTT(int limit,LL* a,int type,const vector<int>& r)
+ * NTT(int limit,i64* a,int type,const vector<int>& r)
  *
  * args:
  * - limit: the length of sequence a, must be 2^k pattern
@@ -106,19 +106,19 @@ LL ksm(LL a, LL b, LL mod = P) {
  *
  * Luogu P3803 - 1.89s 40.51MB
  */
-void NTT(int limit, LL* a, int type, const vector<int>& r) {
+void NTT(int limit, i64* a, int type, const vector<int>& r) {
   for (int i = 0; i < limit; ++i)
     if (i < r[i]) swap(a[i], a[r[i]]);  // re-sort
   // accumulate length
   for (int mid = 1; mid < limit; mid <<= 1) {
-    LL Wn = ksm(type == 1 ? G : Gi, (P - 1) / (mid << 1));  // number theory
-                                                            // unit
+    i64 Wn = ksm(type == 1 ? G : Gi, (P - 1) / (mid << 1));  // number theory
+                                                             // unit
     for (int j = 0; j < limit; j += (mid << 1)) {
-      LL w = 1;
+      i64 w = 1;
       for (int k = 0; k < mid;
            ++k, w = (w * Wn) % P)  // iterate left half period
       {
-        LL x = a[j + k], y = w * a[j + k + mid] % P;
+        i64 x = a[j + k], y = w * a[j + k + mid] % P;
         a[j + k] = (x + y) % P;
         a[j + k + mid] = (x - y + P) % P;
       }
@@ -135,13 +135,13 @@ void NTT_demo() {
   for (int i = 0; i < limit; ++i)
     r[i] = (r[i >> 1] >> 1) | ((i & 1) << (l - 1));
 
-  vector<LL> a(limit + 1), b(limit + 1);
+  vector<i64> a(limit + 1), b(limit + 1);
   for (int i = 0; i <= n; ++i) cin >> a[i];
   for (int i = 0; i <= m; ++i) cin >> b[i];
   NTT(limit, a.data(), 1, r), NTT(limit, b.data(), 1, r);
   for (int i = 0; i < limit; ++i) a[i] = (a[i] * b[i]) % P;
   NTT(limit, a.data(), -1, r);
-  LL inv = ksm(limit, P - 2) % P;
+  i64 inv = ksm(limit, P - 2) % P;
   for (int i = 0; i <= n + m; ++i) cout << (a[i] * inv) % P << ' ';
   cout << endl;
 }

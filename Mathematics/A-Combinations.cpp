@@ -12,6 +12,12 @@ i64 ksm(i64 a, i64 b, i64 mod) {
   return ret;
 }
 
+/**
+ * Combination Module
+ *
+ * This module provides support for faster combinatoric calculations.
+ */
+
 struct Combn {
   vector<i64> fac, ifac;
   i64 n, mod;

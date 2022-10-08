@@ -1,0 +1,36 @@
+
+\partl{FFT Theory.}
+
+Coefficient representation:
+$$
+  f(x)=\sum_{i=0}^n a_i x^i.
+$$
+
+Value representation:
+$$
+  \{(a_i,f(a_i))|0\le i\le n\}.
+$$
+
+Divide $f(x)$ into odd function part and even function part:
+$$
+  f_o(x)=\sum_{i=0}^{n-2} a_i x^{\frac{i}{2}}.
+$$
+
+$$
+  f_e(x)=\sum_{i=1}^{n-1} a_i x^{\frac{i-1}{2}}.
+$$
+
+So the equation is satisfied:
+$$
+  f(x)=f_e(x^2)+x f_o(x^2).
+$$
+
+If we implement complex units into $f(x)$, then the following equation is satisfied:
+\begin{equation*}
+  \begin{split}
+    f(\omega_{n}^k)&=f_e(\omega_{n}^{2k})+\omega_{n}^k f_o(\omega_{n}^{2k}). \\
+    f(\omega_{n}^{k+\frac{n}{2}})&=f_e(\omega_n^{2k})-\omega_{n}^k f_o(\omega_{n}^{2k}).
+  \end{split}
+\end{equation*}
+
+We can acquire the value representation of $f_o(x)$ and $f_e(x)$, and exponentially reduce the problem size.
