@@ -29,23 +29,18 @@ struct DSU {
 struct BipartiteDyeingDSU : public DSU {
   int n;
 
-  BipartiteDyeingDSU(int _n, const vector<tuple<int, int, int>>& edges)
-      : n(_n), DSU(2 * _n) {
-    // this part uses C++17 grammar
-    for (auto [u, v, we] : edges) {
-      if (we)
-        merge(u, v + n), merge(u + n, v);
-      else
-        merge(u, v), merge(u + n, v + n);
-    }
+  BipartiteDyeingDSU(int _n) : n(_n), DSU(2 * _n) {}
+
+  void merge(int u, int v, int flg) {
+    if (flg)
+      DSU::merge(u, v + n), DSU::merge(u + n, v);
+    else
+      DSU::merge(u, v), DSU::merge(u + n, v + n);
   }
 
-  int result(vector<int>& res) {
+  int result() {
     for (int i = 1; i <= n; ++i)
       if (find(i) == find(i + n)) return 0;
-    res.resize(n + 1, 0);
-    // same sided with 1 is named side 0
-    for (int i = 1; i <= n; ++i) res[i] = !(find(i) == find(1));
     return 1;
   }
 };
