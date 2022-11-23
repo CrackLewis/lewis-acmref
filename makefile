@@ -4,7 +4,7 @@ AUTHOR = "Lewis Lee"
 INITIATE = "Tongji Univ."
 WD = .
 
-.PHONY: all
+.PHONY: all clear
 
 all: clear build
 

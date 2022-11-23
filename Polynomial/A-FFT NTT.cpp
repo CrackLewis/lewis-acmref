@@ -10,10 +10,11 @@ using namespace std;
 
 // ============ FFT ============
 
-const double PI = acos(-1.0);
+using LD = long double;
+const LD PI = acos(-1.0);
 struct Complex {
-  double r, i;
-  Complex(double _r = 0, double _i = 0) : r(_r), i(_i) {}
+  LD r, i;
+  Complex(LD _r = 0, LD _i = 0) : r(_r), i(_i) {}
 };
 Complex operator+(const Complex& a, const Complex& b) {
   return Complex(a.r + b.r, a.i + b.i);
@@ -124,6 +125,10 @@ void NTT(int limit, i64* a, int type, const vector<int>& r) {
       }
     }
   }
+  if (type == -1) {
+    i64 inv = ksm(limit, P - 2) % P;
+    for (int i = 0; i < limit; ++i) a[i] = (a[i] * inv) % P;
+  }
 }
 
 void NTT_demo() {
@@ -141,7 +146,6 @@ void NTT_demo() {
   NTT(limit, a.data(), 1, r), NTT(limit, b.data(), 1, r);
   for (int i = 0; i < limit; ++i) a[i] = (a[i] * b[i]) % P;
   NTT(limit, a.data(), -1, r);
-  i64 inv = ksm(limit, P - 2) % P;
-  for (int i = 0; i <= n + m; ++i) cout << (a[i] * inv) % P << ' ';
+  for (int i = 0; i <= n + m; ++i) cout << a[i] << ' ';
   cout << endl;
 }

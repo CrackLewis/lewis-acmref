@@ -16,7 +16,7 @@ struct graph1 {
     head[u] = ++eid;
   }
 
-  vector<int> tarjan() {
+  vector<int> scc_tarjan() {
     int dfn_cnt = 0, scc_cnt = 0, top = 0;
     vector<int> dfn(n + 1), low(n + 1), stk(n + 1), in_stk(n + 1);
     vector<int> scc_no(n + 1), sz(n + 1);
